@@ -34,7 +34,9 @@
       --heart-y: 39%;
       --heart-size: 200px;
       --heart-scale: 1.40;
-      --heart-fill-scale: 1.44;
+      --heart-fill-scale: 1.45;
+      --heart-fill-shift-x: 0px;
+      --heart-fill-shift-y: 6px;
       --calc-x: 50%;
       --calc-y: 90%;
       --calc-w: 260px;
@@ -225,14 +227,12 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      transform: scale(var(--heart-fill-scale));
+      transform: translate(var(--heart-fill-shift-x), var(--heart-fill-shift-y)) scale(var(--heart-fill-scale));
       transform-origin: center;
     }
 
     .heart-outline {
-      fill: rgba(255, 255, 255, 0.12);
-      stroke: rgba(255, 255, 255, 0.85);
-      stroke-width: 3;
+      display: none;
     }
 
     .heart-liquid {
@@ -243,7 +243,7 @@
     .heart-percent {
       font-family: "Bodoni Moda", serif;
       font-size: 18px;
-      fill: #ffffff;
+      fill: url(#percentGradient);
       text-anchor: middle;
       dominant-baseline: middle;
       text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -339,10 +339,12 @@
         --heart-y: 40%;
         --heart-size: 150px;
         --heart-scale: 1.02;
-        --heart-fill-scale: 1.40;
-        --calc-y: 86%;
-        --calc-w: 210px;
-        --calc-h: 70px;
+        --heart-fill-scale: 1.35;
+        --heart-fill-shift-x: 0px;
+        --heart-fill-shift-y: 6px;
+        --calc-y: 90%;
+        --calc-w: 220px;
+        --calc-h: 64px;
       }
       .scene {
         padding: 16px 14px 22px;
@@ -420,6 +422,10 @@
               <linearGradient id="heartGradient" x1="0" x2="0" y1="1" y2="0">
                 <stop offset="0%" stop-color="#ff5ca8"/>
                 <stop offset="100%" stop-color="#ff9fca"/>
+              </linearGradient>
+              <linearGradient id="percentGradient" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#b60f1a"/>
+                <stop offset="100%" stop-color="#ff3b3b"/>
               </linearGradient>
               <clipPath id="heartClip">
                 <path d="M50 15 C35 0 5 10 5 38 C5 62 30 80 50 90 C70 80 95 62 95 38 C95 10 65 0 50 15 Z"></path>
