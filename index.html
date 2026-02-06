@@ -452,7 +452,7 @@
     const nameRight = document.getElementById("nameRight");
 
     function calcScore() {
-      return Math.floor(Math.random() * 101);
+      return Math.floor(Math.random() * 31) + 70;
     }
 
     function setHeart(percent) {
@@ -462,6 +462,8 @@
       heartFill.setAttribute("y", y.toFixed(2));
       heartFill.setAttribute("height", height.toFixed(2));
       heartPercent.textContent = `${percent}%`;
+      heartPercent.setAttribute("x", "50");
+      heartPercent.setAttribute("y", "50");
     }
 
     calcBtn.addEventListener("click", () => {
