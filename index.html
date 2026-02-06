@@ -220,6 +220,25 @@
       pointer-events: none;
     }
 
+    .love-percent.is-animating {
+      animation: percentReveal 2400ms cubic-bezier(0.18, 0.9, 0.22, 1);
+    }
+
+    @keyframes percentReveal {
+      0% {
+        transform: translate(-50%, -48%) scale(0.98);
+        letter-spacing: 0.06em;
+        opacity: 0;
+      }
+      45% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        letter-spacing: 0.02em;
+      }
+    }
+
     .calc-hotspot {
       position: absolute;
       left: var(--calc-x);
@@ -355,7 +374,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       .ribbons, .ribbons::before, .ribbons::after,
-      .floater { animation: none; }
+      .floater,
+      .love-percent.is-animating { animation: none; }
     }
   </style>
 </head>
@@ -398,20 +418,46 @@
     const lovePercent = document.getElementById("lovePercent");
     const nameLeft = document.getElementById("nameLeft");
     const nameRight = document.getElementById("nameRight");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function calcScore() {
       return Math.floor(Math.random() * 31) + 70;
     }
 
-    function setLovePercent(percent) {
-      lovePercent.textContent = `${percent}%`;
+    function animatePercent(from, to, durationMs = 2400) {
+      const start = performance.now();
+      const range = Math.max(1, Math.abs(to - from));
+      const clampedDuration = Math.min(3400, Math.max(1800, durationMs + range * 10));
+
+      const tick = (now) => {
+        const elapsed = now - start;
+        const t = Math.min(1, elapsed / clampedDuration);
+        const eased = 1 - Math.pow(1 - t, 2.6);
+        const current = Math.round(from + (to - from) * eased);
+        lovePercent.textContent = `${current}%`;
+        if (t < 1) {
+          requestAnimationFrame(tick);
+        }
+      };
+      requestAnimationFrame(tick);
     }
 
     calcBtn.addEventListener("click", () => {
       const left = nameLeft.value.trim();
       const right = nameRight.value.trim();
       if (!left || !right) return;
-      setLovePercent(calcScore());
+      const nextScore = calcScore();
+      const currentValue = parseInt(lovePercent.textContent || "0", 10) || 0;
+
+      lovePercent.classList.remove("is-animating");
+      void lovePercent.offsetWidth;
+      lovePercent.classList.add("is-animating");
+
+      if (prefersReducedMotion.matches) {
+        lovePercent.textContent = `${nextScore}%`;
+        return;
+      }
+      animatePercent(currentValue, nextScore);
     });
   </script>
 </body>
