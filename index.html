@@ -22,35 +22,47 @@
       --ink: #2a1b1f;
       --gold: #f6c9d8;
       --shadow: 0 20px 60px rgba(255, 94, 168, 0.25);
-      --field-y: 56%;
+      --field-y: 52%;
+      --field-left-y: var(--field-y);
+      --field-right-y: var(--field-y);
       --field-left-x: 9%;
       --field-right-x: 9%;
       --field-w: min(28vw, 320px);
       --label-offset: -22px;
       --input-offset: 6px;
       --heart-x: 50%;
-      --heart-y: 34%;
-      --heart-size: 220px;
-      --heart-scale: 1.08;
+      --heart-y: 39%;
+      --heart-size: 200px;
+      --heart-scale: 1.40;
+      --heart-fill-scale: 1.44;
       --calc-x: 50%;
-      --calc-y: 86%;
-      --calc-w: 220px;
-      --calc-h: 70px;
+      --calc-y: 90%;
+      --calc-w: 260px;
+      --calc-h: 90px;
     }
 
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      scrollbar-width: none;
+    }
+    body::-webkit-scrollbar {
+      display: none;
+    }
     body {
       margin: 0;
       color: var(--ink);
       font-family: "Nunito Sans", system-ui, sans-serif;
-      background: url("Valentines desktop view bg.png") center/cover no-repeat fixed;
+      background-color: #b12b2b;
+      background: url("bg 4.png") center/cover no-repeat fixed;
       overflow-x: hidden;
     }
 
     .scene {
       position: relative;
-      min-height: 100vh;
+      min-height: 100svh;
+      height: 100svh;
       display: grid;
       grid-template-rows: auto 1fr auto;
       padding: 32px 24px 40px;
@@ -131,9 +143,9 @@
     }
 
     .overlay {
-      position: absolute;
+      position: fixed;
       inset: 0;
-      pointer-events: none;
+      pointer-events: auto;
     }
 
     .field {
@@ -143,26 +155,29 @@
       gap: 6px;
       width: var(--field-w);
       pointer-events: auto;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .field-left {
-      top: var(--field-y);
+      top: var(--field-left-y);
       left: var(--field-left-x);
     }
 
     .field-right {
-      top: var(--field-y);
+      top: var(--field-right-y);
       right: var(--field-right-x);
     }
 
     label {
-      font-size: 13px;
-      letter-spacing: 0.08em;
+      font-family: "Bodoni Moda", serif;
+      font-size: 18px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #f7e6d6;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
       transform: translateY(var(--label-offset));
+      text-align: center;
+      white-space: nowrap;
     }
 
     input {
@@ -170,18 +185,25 @@
       border-radius: 0;
       border: none;
       outline: none;
-      font-size: 16px;
+      font-family: "Bodoni Moda", serif;
+      font-size: 20px;
+      font-weight: 600;
       background: transparent;
       color: #f7e6d6;
-      text-align: left;
+      text-align: center;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       transform: translateY(var(--input-offset));
       width: 100%;
+      caret-color: #ffffff;
     }
 
     input:focus {
       box-shadow: none;
+    }
+
+    input::placeholder {
+      color: rgba(247, 230, 214, 0.75);
     }
 
     .heart-wrap {
@@ -195,12 +217,7 @@
     }
 
     .heart-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      transform: scale(var(--heart-scale));
+      display: none;
     }
 
     .heart-svg {
@@ -208,12 +225,14 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      transform: scale(var(--heart-fill-scale));
+      transform-origin: center;
     }
 
     .heart-outline {
       fill: rgba(255, 255, 255, 0.12);
-      stroke: rgba(255, 255, 255, 0.65);
-      stroke-width: 2;
+      stroke: rgba(255, 255, 255, 0.85);
+      stroke-width: 3;
     }
 
     .heart-liquid {
@@ -241,6 +260,7 @@
       border: none;
       cursor: pointer;
       pointer-events: auto;
+      z-index: 4;
     }
 
 
@@ -305,34 +325,60 @@
 
     @media (max-width: 720px) {
       body {
-        background: url("Valentine game bg 2.png") center/cover no-repeat scroll;
+        background: url("bg phone 4.png") center/cover no-repeat scroll;
       }
       :root {
-        --field-y: 56%;
-        --field-left-x: 6%;
-        --field-right-x: 6%;
-        --field-w: min(70vw, 320px);
-        --label-offset: -20px;
-        --input-offset: 4px;
-        --heart-y: 36%;
-        --heart-size: 170px;
-        --heart-scale: 1.06;
-        --calc-y: 88%;
-        --calc-w: 200px;
-        --calc-h: 64px;
+        --field-y: 77%;
+        --field-left-y: 77%;
+        --field-right-y: 82%;
+        --field-left-x: 56%;
+        --field-right-x: 56%;
+        --field-w: min(90vw, 320px);
+        --label-offset: -4px;
+        --input-offset: 0px;
+        --heart-y: 40%;
+        --heart-size: 150px;
+        --heart-scale: 1.02;
+        --heart-fill-scale: 1.40;
+        --calc-y: 86%;
+        --calc-w: 210px;
+        --calc-h: 70px;
       }
       .scene {
         padding: 16px 14px 22px;
       }
-      .heart-wrap {
-        top: 40%;
-        width: 120px;
-        height: 110px;
+      .field {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .field input {
+        width: auto;
+        min-width: 120px;
+      }
+      label {
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        text-align: center;
+      }
+      input {
+        text-align: center;
+      }
+      input {
+        font-size: 16px;
+      }
+      .field-left,
+      .field-right {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateX(20px);
       }
       .calc-hotspot {
-        top: 86%;
-        width: 180px;
-        height: 64px;
+        top: var(--calc-y);
+        width: var(--calc-w);
+        height: var(--calc-h);
       }
     }
 
@@ -359,12 +405,12 @@
     <main class="content">
       <div class="overlay">
         <div class="field field-left">
-          <label for="nameLeft">Partner Name</label>
-          <input id="nameLeft" name="nameLeft" autocomplete="off"/>
+          <label for="nameLeft">Your Name</label>
+          <input id="nameLeft" name="nameLeft" autocomplete="off" placeholder="Your Name"/>
         </div>
         <div class="field field-right">
-          <label for="nameRight">Partner Name</label>
-          <input id="nameRight" name="nameRight" autocomplete="off"/>
+          <label for="nameRight">Your Lover Name</label>
+          <input id="nameRight" name="nameRight" autocomplete="off" placeholder="Your Lover Name"/>
         </div>
 
         <div class="heart-wrap" aria-hidden="true">
