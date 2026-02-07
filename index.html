@@ -38,6 +38,11 @@
     }
 
     * { box-sizing: border-box; }
+
+    /* Remove mobile tap flash on interactive elements */
+    button, input, label, .calc-hotspot {
+      -webkit-tap-highlight-color: transparent;
+    }
     html, body {
       height: 100%;
       overflow: hidden;
@@ -462,3 +467,4 @@
   </script>
 </body>
 </html>
+
