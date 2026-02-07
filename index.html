@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=Montserrat:wght@700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
@@ -30,11 +30,12 @@
       --label-offset: -22px;
       --input-offset: 6px;
       --percent-x: 50%;
-      --percent-y: 40%;
+      --percent-y: 38%;
       --calc-x: 50%;
       --calc-y: 90%;
       --calc-w: 260px;
       --calc-h: 90px;
+      --percent-gradient: linear-gradient(135deg, #b60f1a 0%, #ff3b3b 50%, #ff7a7a 100%);
     }
 
     * { box-sizing: border-box; }
@@ -212,17 +213,36 @@
       left: var(--percent-x);
       top: var(--percent-y);
       transform: translate(-50%, -50%);
-      font-family: "Bodoni Moda", serif;
-      font-size: clamp(42px, 7vw, 104px);
-      font-weight: 600;
+      display: inline-block;
+      white-space: nowrap;
+      line-height: 1;
+      font-family: "Montserrat", "Nunito Sans", system-ui, sans-serif;
+      font-size: clamp(38px, 6vw, 92px);
+      font-weight: 700;
       letter-spacing: 0.02em;
       text-align: center;
-      background: linear-gradient(135deg, #b60f1a 0%, #ff3b3b 50%, #ff7a7a 100%);
+      background: none;
+      text-shadow: none;
+      pointer-events: none;
+    }
+
+    .love-percent .love-number {
+      display: inline-block;
+      background: var(--percent-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      pointer-events: none;
+    }
+
+    .love-percent .love-sign {
+      position: absolute;
+      left: 100%;
+      top: 0;
+      margin-left: 0.06em;
+      background: var(--percent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .love-percent.is-animating {
@@ -331,13 +351,13 @@
         --field-w: min(90vw, 320px);
         --label-offset: -4px;
         --input-offset: 0px;
-        --percent-y: 42%;
+        --percent-y: 40%;
         --calc-y: 90%;
         --calc-w: 220px;
         --calc-h: 64px;
       }
       .love-percent {
-        font-size: clamp(64px, 16vw, 160px);
+        font-size: clamp(56px, 14vw, 132px);
       }
       .scene {
         padding: 16px 14px 22px;
@@ -429,6 +449,10 @@
       return Math.floor(Math.random() * 31) + 70;
     }
 
+    function renderPercent(value) {
+      return `<span class="love-number">${value}</span><span class="love-sign">%</span>`;
+    }
+
     function animatePercent(from, to, durationMs = 2400) {
       const start = performance.now();
       const range = Math.max(1, Math.abs(to - from));
@@ -439,7 +463,7 @@
         const t = Math.min(1, elapsed / clampedDuration);
         const eased = 1 - Math.pow(1 - t, 2.6);
         const current = Math.round(from + (to - from) * eased);
-        lovePercent.textContent = `${current}%`;
+        lovePercent.innerHTML = renderPercent(current);
         if (t < 1) {
           requestAnimationFrame(tick);
         }
@@ -459,7 +483,7 @@
       lovePercent.classList.add("is-animating");
 
       if (prefersReducedMotion.matches) {
-        lovePercent.textContent = `${nextScore}%`;
+        lovePercent.innerHTML = renderPercent(nextScore);
         return;
       }
       animatePercent(currentValue, nextScore);
