@@ -358,6 +358,10 @@
       .brand img {
         height: 44px;
       }
+      :root {
+        --label-offset: 10px;
+        --input-offset: 4px;
+      }
     }
 
     @media (max-width: 720px) {
@@ -370,13 +374,13 @@
       }
         :root {
           --field-y: 50%;
-          --field-left-y: 54%;
-          --field-right-y: 54%;
-          --field-left-x: 12%;
-            --field-right-x: 16%;
-            --field-w: clamp(110px, 34vw, 150px);
-            --label-offset: 10px;
-            --input-offset: 2px;
+        --field-left-y: 54%;
+        --field-right-y: 54%;
+        --field-left-x: 12%;
+          --field-right-x: 16%;
+          --field-w: clamp(110px, 34vw, 150px);
+            --label-offset: 18px;
+            --input-offset: 6px;
             --percent-y: 26%;
             --percent-x: 48%;
             --calc-y: 66%;
