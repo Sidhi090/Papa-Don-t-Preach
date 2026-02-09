@@ -161,6 +161,7 @@
       width: var(--field-w);
       pointer-events: auto;
       cursor: text;
+      touch-action: manipulation;
     }
 
     .field label,
@@ -206,13 +207,13 @@
     input {
       padding: 4px 8px;
       border-radius: 0;
-      border: none;
-      border-bottom: 1px solid rgba(247, 230, 214, 0.7);
-      outline: none;
+      border: 0 !important;
+      border-bottom: 0 !important;
+      outline: 0 !important;
       font-family: "Bodoni Moda", serif;
       font-size: 20px;
       font-weight: 600;
-      background: transparent;
+      background: transparent !important;
       color: #f7e6d6;
       text-align: center;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
@@ -220,11 +221,18 @@
       transform: translateY(var(--input-offset));
       width: 100%;
       caret-color: #ffffff;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-decoration: none;
+      box-shadow: none !important;
+      background-image: none !important;
     }
 
     input:focus {
-      box-shadow: none;
-      border-bottom-color: #f7e6d6;
+      box-shadow: none !important;
+      border: 0 !important;
+      outline: 0 !important;
     }
 
     input::placeholder {
@@ -361,8 +369,8 @@
         height: 44px;
       }
       :root {
-        --label-offset: 55px;
-        --input-offset: 16px;
+        --label-offset: 70px;
+        --input-offset: var(--label-offset);
       }
     }
 
@@ -378,11 +386,11 @@
           --field-y: 50%;
         --field-left-y: 54%;
         --field-right-y: 54%;
-        --field-left-x: 12%;
+          --field-left-x: 12%;
           --field-right-x: 16%;
           --field-w: clamp(110px, 34vw, 150px);
-            --label-offset: 55px;
-            --input-offset: 22px;
+            --label-offset: 70px;
+            --input-offset: var(--label-offset);
             --percent-y: 26%;
             --percent-x: 48%;
             --calc-y: 66%;
