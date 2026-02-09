@@ -11,6 +11,7 @@
 
   <style>
     :root {
+      --vh: 1vh;
       --pink-0: #fff5f9;
       --pink-1: #ffd1e6;
       --pink-2: #ff9fca;
@@ -45,7 +46,8 @@
       -webkit-tap-highlight-color: transparent;
     }
     html, body {
-      height: 100%;
+      height: calc(var(--vh) * 100);
+      min-height: calc(var(--vh) * 100);
       overflow: hidden;
       scrollbar-width: none;
     }
@@ -67,8 +69,8 @@
 
     .scene {
       position: relative;
-      min-height: 100svh;
-      height: 100svh;
+      min-height: calc(var(--vh) * 100);
+      height: calc(var(--vh) * 100);
       display: grid;
       grid-template-rows: auto 1fr auto;
       padding: 32px 24px 40px;
@@ -151,6 +153,8 @@
     .overlay {
       position: fixed;
       inset: 0;
+      height: calc(var(--vh) * 100);
+      width: 100vw;
       pointer-events: auto;
     }
 
@@ -382,9 +386,9 @@
 
     @media (max-width: 720px) {
       html, body {
-        height: auto;
-        min-height: 120vh;
-        overflow-y: auto;
+        height: calc(var(--vh) * 100);
+        min-height: calc(var(--vh) * 100);
+        overflow: hidden;
       }
       body {
         background-image: url("background-image.png");
@@ -512,6 +516,22 @@
     const nameLeft = document.getElementById("nameLeft");
     const nameRight = document.getElementById("nameRight");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const setLockedVh = () => {
+      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
+    };
+    // Lock layout to initial viewport height; ignore small resize jumps from mobile browser chrome
+    setLockedVh();
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+    window.addEventListener("resize", () => {
+      const widthDiff = Math.abs(window.innerWidth - lastWidth);
+      const heightDiff = Math.abs(window.innerHeight - lastHeight);
+      if (widthDiff > 80 || heightDiff > 160) {
+        lastWidth = window.innerWidth;
+        lastHeight = window.innerHeight;
+        setLockedVh();
+      }
+    });
 
     // Make labels/fields tap-to-edit; hide label while editing or when filled
     document.querySelectorAll(".field").forEach((fieldEl) => {
