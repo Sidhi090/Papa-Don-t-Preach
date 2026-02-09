@@ -311,7 +311,7 @@
       border: none;
       cursor: pointer;
       pointer-events: auto;
-      z-index: 3;
+      z-index: 20;
       touch-action: manipulation;
     }
 
@@ -387,21 +387,21 @@
         background-size: contain;
         background-attachment: scroll;
       }
-        :root {
-          --field-y: 50%;
+      :root {
+        --field-y: 50%;
         --field-left-y: 54%;
         --field-right-y: 54%;
-          --field-left-x: 12%;
-          --field-right-x: 16%;
-          --field-w: clamp(110px, 34vw, 150px);
-            --label-offset: 70px;
-            --input-offset: var(--label-offset);
-            --percent-y: 26%;
-            --percent-x: 48%;
-            --calc-y: 66%;
-          --calc-w: 320px;
-          --calc-h: 140px;
-        }
+        --field-left-x: 12%;
+        --field-right-x: 16%;
+        --field-w: clamp(110px, 34vw, 150px);
+        --label-offset: 70px;
+        --input-offset: var(--label-offset);
+        --percent-y: 26%;
+        --percent-x: 48%;
+        --calc-y: 66%;
+        --calc-w: 320px;
+        --calc-h: 140px;
+      }
       .love-percent {
         font-size: clamp(38px, 11vw, 84px);
       }
@@ -432,28 +432,25 @@
       .field input {
         width: 100%;
       }
-        label {
-          font-size: 13px;
-          letter-spacing: 0.04em;
-          white-space: nowrap;
-          text-align: center;
-          text-transform: none;
-        }
-        input {
-          text-align: center;
-        }
-        input {
-          font-size: 12px;
-        }
-        .calc-hotspot {
-        top: 58%;
-        left: 48%;
-        width: min(240px, 82vw);
-        height: 50px;
+      label {
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        text-align: center;
+        text-transform: none;
+      }
+      input {
+        text-align: center;
+        font-size: 12px;
+      }
+      .calc-hotspot {
+        top: 63%;
+        left: 50%;
+        width: min(200px, 78vw);
+        height: 70px;
         transform: translate(-50%, -50%);
         z-index: 20;
-    }
-}
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
