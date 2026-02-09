@@ -29,7 +29,7 @@
       --field-w: clamp(220px, 28vw, 320px);
       --label-offset: -22px;
       --input-offset: 6px;
-      --percent-x: 49%;
+      --percent-x: 50%;
       --percent-y: 40%;
       --calc-x: 50%;
       --calc-y: 90%;
@@ -380,11 +380,16 @@
     }
 
     @media (max-width: 720px) {
+      html, body {
+        height: auto;
+        min-height: 120vh;
+        overflow-y: auto;
+      }
       body {
         background-image: url("background-image.png");
         background-position: center top;
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: 100% auto;
         background-attachment: scroll;
         background-color: #ae2728;
       }
@@ -392,12 +397,12 @@
         --field-y: 50%;
         --field-left-y: 54%;
         --field-right-y: 54%;
-        --field-left-x: 12%;
-        --field-right-x: 16%;
+        --field-left-x: 20%;
+        --field-right-x: 20%;
         --field-w: clamp(110px, 34vw, 150px);
         --label-offset: 70px;
         --input-offset: var(--label-offset);
-        --percent-y: 36%;
+        --percent-y: 32%;
         --percent-x: 47%;
         --calc-y: 66%;
         --calc-w: 320px;
@@ -434,7 +439,7 @@
         width: 100%;
       }
       label {
-        font-size: 13px;
+        font-size: 12px;
         letter-spacing: 0.04em;
         white-space: nowrap;
         text-align: center;
@@ -444,14 +449,17 @@
         text-align: center;
         font-size: 12px;
       }
-           .calc-hotspot {
-        top: 88%;
+      .love-percent {
+        font-size: clamp(33px, 10vw, 83px);
+      }
+      .calc-hotspot {
+        top: 75%;
         left: 50%;
         width: min(240px, 80vw);
         height: 50px;
         transform: translate(-50%, -50%);
         z-index: 20;
-    }
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
