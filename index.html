@@ -225,6 +225,7 @@
       transform: translateY(var(--input-offset));
       width: 100%;
       caret-color: #ffffff;
+      text-transform: uppercase;
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -549,7 +550,16 @@
         syncState();
       });
 
-      inputEl.addEventListener("input", syncState);
+      inputEl.addEventListener("input", () => {
+        const start = inputEl.selectionStart;
+        const end = inputEl.selectionEnd;
+        inputEl.value = inputEl.value.toUpperCase();
+        // Restore caret position so typing feels natural
+        if (start !== null && end !== null) {
+          inputEl.setSelectionRange(start, end);
+        }
+        syncState();
+      });
 
       syncState();
     });
