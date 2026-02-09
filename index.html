@@ -193,7 +193,7 @@
       font-family: "Bodoni Moda", serif;
       font-size: 18px;
       letter-spacing: 0.06em;
-      text-transform: uppercase;
+      text-transform: none;
       color: #f7e6d6;
       text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
       transform: translateY(var(--label-offset));
@@ -375,11 +375,11 @@
           --field-left-x: 12%;
             --field-right-x: 16%;
             --field-w: clamp(110px, 34vw, 150px);
-            --label-offset: -6px;
-            --input-offset: 2px;
-            --percent-y: 26%;
-            --percent-x: 48%;
-            --calc-y: 66%;
+          --label-offset: -2px;
+          --input-offset: 2px;
+          --percent-y: 26%;
+          --percent-x: 48%;
+          --calc-y: 66%;
           --calc-w: 320px;
           --calc-h: 140px;
         }
@@ -418,6 +418,7 @@
           letter-spacing: 0.04em;
           white-space: nowrap;
           text-align: center;
+          text-transform: none;
         }
         input {
           text-align: center;
@@ -456,11 +457,11 @@
     <main class="content">
       <div class="overlay">
         <div class="field field-left">
-          <label for="nameLeft">YOUR NAME</label>
+          <label for="nameLeft">Your Name</label>
           <input id="nameLeft" name="nameLeft" autocomplete="off"/>
         </div>
         <div class="field field-right">
-          <label for="nameRight">YOUR LOVER’S NAME</label>
+          <label for="nameRight">Your Lover’s Name</label>
           <input id="nameRight" name="nameRight" autocomplete="off"/>
         </div>
 
