@@ -26,11 +26,11 @@
       --field-right-y: var(--field-y);
       --field-left-x: 9%;
       --field-right-x: 9%;
-      --field-w: min(28vw, 320px);
+      --field-w: clamp(220px, 28vw, 320px);
       --label-offset: -22px;
       --input-offset: 6px;
-      --percent-x: 48%;
-      --percent-y: 38%;
+      --percent-x: 49%;
+      --percent-y: 40%;
       --calc-x: 50%;
       --calc-y: 90%;
       --calc-w: 260px;
@@ -57,7 +57,11 @@
       color: var(--ink);
       font-family: "Nunito Sans", system-ui, sans-serif;
       background-color: #b12b2b;
-      background: url("bg 4.png") center/cover no-repeat fixed;
+      background-image: url("bg 4.png");
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-attachment: scroll;
       overflow-x: hidden;
     }
 
@@ -217,7 +221,7 @@
       white-space: nowrap;
       line-height: 1;
       font-family: "Montserrat", "Nunito Sans", system-ui, sans-serif;
-      font-size: clamp(38px, 6vw, 92px);
+      font-size: clamp(34px, 5.4vw, 84px);
       font-weight: 700;
       letter-spacing: 0.02em;
       text-align: center;
@@ -276,6 +280,7 @@
       cursor: pointer;
       pointer-events: auto;
       z-index: 4;
+      touch-action: manipulation;
     }
 
 
@@ -340,38 +345,41 @@
 
     @media (max-width: 720px) {
       body {
-        background: url("bg phone 4.png") center/cover no-repeat scroll;
+        background-image: url("bg phone 4.png");
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-attachment: scroll;
       }
       :root {
-        --field-y: 77%;
-        --field-left-y: 77%;
-        --field-right-y: 82%;
-        --field-left-x: 56%;
-        --field-right-x: 56%;
-        --field-w: min(90vw, 320px);
-        --label-offset: -4px;
-        --input-offset: 0px;
-        --percent-y: 38%;
-        --percent-x: 46%;
-        --calc-y: 90%;
-        --calc-w: 220px;
-        --calc-h: 64px;
+        --field-y: 78%;
+        --field-left-y: 78%;
+        --field-right-y: 78%;
+        --field-left-x: 10%;
+        --field-right-x: 10%;
+        --field-w: clamp(120px, 38vw, 180px);
+        --label-offset: -6px;
+        --input-offset: 2px;
+        --percent-y: 26%;
+        --percent-x: 50%;
+        --calc-y: 64%;
+        --calc-w: 260px;
+        --calc-h: 120px;
       }
       .love-percent {
-        font-size: clamp(56px, 14vw, 132px);
+        font-size: clamp(38px, 11vw, 84px);
       }
       .scene {
         padding: 16px 14px 22px;
       }
       .field {
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
       }
       .field input {
-        width: auto;
-        min-width: 120px;
+        width: 100%;
       }
       label {
         font-size: 12px;
@@ -385,11 +393,15 @@
       input {
         font-size: 16px;
       }
-      .field-left,
-      .field-right {
-        left: 50%;
+      .field-left {
+        left: var(--field-left-x);
         right: auto;
-        transform: translateX(-50%) translateX(20px);
+        transform: none;
+      }
+      .field-right {
+        right: var(--field-right-x);
+        left: auto;
+        transform: none;
       }
       .calc-hotspot {
         top: var(--calc-y);
@@ -422,12 +434,12 @@
     <main class="content">
       <div class="overlay">
         <div class="field field-left">
-          <label for="nameLeft">Your Name</label>
-          <input id="nameLeft" name="nameLeft" autocomplete="off" placeholder="Your Name"/>
+          <label for="nameLeft">YOUR NAME</label>
+          <input id="nameLeft" name="nameLeft" autocomplete="off"/>
         </div>
         <div class="field field-right">
-          <label for="nameRight">Your Lover Name</label>
-          <input id="nameRight" name="nameRight" autocomplete="off" placeholder="Your Lover Name"/>
+          <label for="nameRight">YOUR LOVER’S NAME</label>
+          <input id="nameRight" name="nameRight" autocomplete="off"/>
         </div>
 
         <div id="lovePercent" class="love-percent" aria-live="polite"></div>
@@ -492,4 +504,3 @@
   </script>
 </body>
 </html>
-
