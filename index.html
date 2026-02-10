@@ -1,14 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>The Love Calculator</title>
+    <title>The Love Calculator</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Montserrat:wght@700&display=swap"
+      rel="stylesheet" />
 
-<style>
+    <style>
 
 /* ================= CUSTOM FONT ================= */
 
@@ -238,7 +240,9 @@ input:focus {
 /* ================= MOBILE ================= */
 
 @media (max-width: 720px) {
-
+.mobile-btn {
+    top: 72%;
+}
   body {
 
     background-image: url("final-bg.png");
@@ -246,32 +250,30 @@ input:focus {
 
   :root {
 
-    --field-width: 140px;
+    --field-width: 105px;
 
-    --label-offset: -4px; /* DOWN */
+    --label-offset: 8px; /* DOWN */
 
     --percent-y: 38%; /* DOWN */
   }
 
-  .field-left {
-    left: 18%;
-    top: 54%;
-  }
+    .field-left {
+        left: 24%;
+        top: 59%;
+    }
 
-  .field-right {
-    right: 18%;
-    top: 54%;
-  }
-
+    .field-right {
+        right: 24%;
+        top: 59%;
+    }
   label {
     font-size: 12px;
-    top : 50px;
   }
 
   input {
     font-size: 14px;
 
-    width: 90%; /* SHORTER LINE */
+    width: 60%; /* SHORTER LINE */
   }
 
   .result {
@@ -289,38 +291,38 @@ input:focus {
 }
 
 </style>
-</head>
+  </head>
 
-<body>
+  <body>
 
-<div class="app">
+    <div class="app">
 
-  <!-- LEFT -->
-  <div class="field field-left">
-    <label>Your Name</label>
-    <input id="leftName" autocomplete="off"/>
-  </div>
+      <!-- LEFT -->
+      <div class="field field-left">
+        <label>Your Name</label>
+        <input id="leftName" autocomplete="off" />
+      </div>
 
-  <!-- RIGHT -->
-  <div class="field field-right">
-    <label>Your Lover’s Name</label>
-    <input id="rightName" autocomplete="off"/>
-  </div>
+      <!-- RIGHT -->
+      <div class="field field-right">
+        <label>Your Lover’s Name</label>
+        <input id="rightName" autocomplete="off" />
+      </div>
 
-  <!-- RESULT -->
-  <div id="result" class="result">0%</div>
+      <!-- RESULT -->
+      <div id="result" class="result">0%</div>
 
-  <!-- DESKTOP CLICK -->
-  <div id="desktopBtn" class="desktop-hotspot"></div>
+      <!-- DESKTOP CLICK -->
+      <div id="desktopBtn" class="desktop-hotspot"></div>
 
-  <!-- MOBILE BUTTON -->
-  <button id="mobileBtn" class="mobile-btn">
-    CALCULATE
-  </button>
+      <!-- MOBILE BUTTON -->
+      <button id="mobileBtn" class="mobile-btn">
+        CALCULATE
+      </button>
 
-</div>
+    </div>
 
-<script>
+    <script>
 
 /* ===== ORIGINAL LOGIC UNCHANGED ===== */
 
@@ -381,5 +383,5 @@ desktopBtn.addEventListener("click", calculate);
 
 </script>
 
-</body>
+  </body>
 </html>
