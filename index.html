@@ -1,632 +1,385 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Papa Don’t Preach — Love Calculator</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600&family=Montserrat:wght@700&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<title>The Love Calculator</title>
 
-  <style>
-    :root {
-      --vh: 1vh;
-      --pink-0: #fff5f9;
-      --pink-1: #ffd1e6;
-      --pink-2: #ff9fca;
-      --pink-3: #ff7db8;
-      --pink-4: #ff5ca8;
-      --rose: #ff4b9a;
-      --white: #ffffff;
-      --ink: #2a1b1f;
-      --gold: #f6c9d8;
-      --shadow: 0 20px 60px rgba(255, 94, 168, 0.25);
-      --field-y: 52%;
-      --field-left-y: var(--field-y);
-      --field-right-y: var(--field-y);
-      --field-left-x: 9%;
-      --field-right-x: 9%;
-      --field-w: clamp(220px, 28vw, 320px);
-      --label-offset: -22px;
-      --input-offset: 6px;
-      --percent-x: 50%;
-      --percent-y: 40%;
-      --calc-x: 50%;
-      --calc-y: 90%;
-      --calc-w: 260px;
-      --calc-h: 90px;
-      --percent-gradient: linear-gradient(135deg, #b60f1a 0%, #ff3b3b 50%, #ff7a7a 100%);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
 
-    * { box-sizing: border-box; }
+<style>
 
-    /* Remove mobile tap flash on interactive elements */
-    button, input, label, .calc-hotspot {
-      -webkit-tap-highlight-color: transparent;
-    }
-    html, body {
-      height: calc(var(--vh) * 100);
-      min-height: calc(var(--vh) * 100);
-      overflow: hidden;
-      scrollbar-width: none;
-    }
-    body::-webkit-scrollbar {
-      display: none;
-    }
-    body {
-      margin: 0;
-      color: var(--ink);
-      font-family: "Nunito Sans", system-ui, sans-serif;
-      background-color: #ae2728;
-      background-image: url("bg 4.png");
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-attachment: scroll;
-      overflow-x: hidden;
-    }
+/* ================= CUSTOM FONT ================= */
 
-    .scene {
-      position: relative;
-      min-height: calc(var(--vh) * 100);
-      height: calc(var(--vh) * 100);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      padding: 32px 24px 40px;
-    }
+@font-face {
+  font-family: "ChasaMarelo";
+  src: url("./fonts/CHASA-MARELO.OTF") format("opentype");
+}
 
-    .ribbons, .ribbons::before, .ribbons::after {
-      position: absolute;
-      content: "";
-      inset: -20%;
-      background:
-        radial-gradient(60px 60px at 20% 30%, rgba(255, 92, 168, 0.15), transparent 60%),
-        radial-gradient(120px 120px at 70% 20%, rgba(255, 122, 188, 0.12), transparent 60%),
-        radial-gradient(90px 90px at 80% 70%, rgba(255, 92, 168, 0.12), transparent 60%);
-      filter: blur(1px);
-      animation: drift 18s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
+/* ================= ROOT ================= */
 
-    .ribbons::before {
-      animation-duration: 22s;
-      transform: rotate(8deg);
-    }
-    .ribbons::after {
-      animation-duration: 26s;
-      transform: rotate(-6deg);
-    }
+:root {
 
-    @keyframes drift {
-      0%, 100% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-18px) translateX(12px); }
-    }
+  --red: #b02626;
+  --cream: #efdfcd;
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      position: relative;
-      z-index: 2;
-    }
+  --field-width: clamp(220px, 28vw, 320px);
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+  --label-offset: -18px;
 
-    .brand img {
-      height: 52px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 14px rgba(255, 94, 168, 0.25));
-    }
+  --percent-x: 50%;
+  --percent-y: 38%;
+}
 
-    .brand-tag {
-      font-size: 12px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: #b46a83;
-    }
+/* ================= RESET ================= */
 
-    .cta {
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid rgba(255, 92, 168, 0.25);
-      color: #b84a75;
-      font-weight: 600;
-      box-shadow: 0 10px 30px rgba(255, 92, 168, 0.12);
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    .content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      min-height: 100vh;
-    }
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Bodoni Moda", serif;
+}
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      height: calc(var(--vh) * 100);
-      width: 100vw;
-      pointer-events: auto;
-    }
+/* ================= BODY ================= */
 
-    .field {
-      position: absolute;
-      display: grid;
-      place-items: center;
-      width: var(--field-w);
-      pointer-events: auto;
-      cursor: text;
-      touch-action: manipulation;
-      z-index: 5;
-    }
+body {
 
-    .field label,
-    .field input {
-      grid-area: 1 / 1;
-      pointer-events: auto;
-      position: relative;
-    }
+  background-color: #ae2728;
+  background-image: url("bg 4.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 
-    .field.editing label,
-    .field.has-value label {
-      opacity: 0;
-      transform: translateY(calc(var(--label-offset) - 6px));
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .field.editing input,
-    .field.has-value input {
-      transform: translateY(var(--label-offset));
-    }
+/* ================= APP ================= */
 
-    .field-left {
-      top: var(--field-left-y);
-      left: var(--field-left-x);
-    }
+.app {
 
-    .field-right {
-      top: var(--field-right-y);
-      right: var(--field-right-x);
-    }
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  max-width: 1400px;
+}
 
-    label {
-      font-family: "Bodoni Moda", serif;
-      font-size: 18px;
-      letter-spacing: 0.06em;
-      text-transform: none;
-      color: #f7e6d6;
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
-      transform: translateY(var(--label-offset));
-      text-align: center;
-      white-space: nowrap;
-      cursor: text;
-      transition: opacity 140ms ease, transform 140ms ease;
-      z-index: 2;
-    }
+/* ================= FIELDS ================= */
 
-    input {
-      padding: 4px 8px;
-      border-radius: 0;
-      border: 0 !important;
-      border-bottom: 0 !important;
-      outline: 0 !important;
-      font-family: "Bodoni Moda", serif;
-      font-size: 20px;
-      font-weight: 600;
-      background: transparent !important;
-      color: #f7e6d6;
-      text-align: center;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      transform: translateY(var(--input-offset));
-      width: 100%;
-      caret-color: #ffffff;
-      text-transform: uppercase;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      text-decoration: none;
-      box-shadow: none !important;
-      background-image: none !important;
-      z-index: 1;
-    }
+.field {
 
-    input:focus {
-      box-shadow: none !important;
-      border: 0 !important;
-      outline: 0 !important;
-    }
+  position: absolute;
 
-    input::placeholder {
-      color: rgba(247, 230, 214, 0.75);
-    }
+  width: var(--field-width);
 
-    .love-percent {
-      position: absolute;
-      left: var(--percent-x);
-      top: var(--percent-y);
-      transform: translate(-50%, -50%);
-      display: inline-block;
-      white-space: nowrap;
-      line-height: 1;
-      font-family: "Montserrat", "Nunito Sans", system-ui, sans-serif;
-      font-size: clamp(34px, 5.4vw, 84px);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-align: center;
-      background: none;
-      text-shadow: none;
-      pointer-events: none;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    .love-percent .love-number {
-      display: inline-block;
-      background: var(--percent-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+  z-index: 20;
+}
 
-    .love-percent .love-sign {
-      position: absolute;
-      left: 100%;
-      top: 0;
-      margin-left: 0.06em;
-      background: var(--percent-gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+.field-left {
 
-    .love-percent.is-animating {
-      animation: percentReveal 2400ms cubic-bezier(0.18, 0.9, 0.22, 1);
-    }
+  left: 10%;
+  top: 52%;
+}
 
-    @keyframes percentReveal {
-      0% {
-        transform: translate(-50%, -48%) scale(0.98);
-        letter-spacing: 0.06em;
-        opacity: 0;
-      }
-      45% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        letter-spacing: 0.02em;
-      }
-    }
+.field-right {
 
-    .calc-hotspot {
-      position: absolute;
-      left: var(--calc-x);
-      top: var(--calc-y);
-      transform: translate(-50%, -50%);
-      width: var(--calc-w);
-      height: var(--calc-h);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      pointer-events: auto;
-      z-index: 20;
-      touch-action: manipulation;
-    }
+  right: 10%;
+  top: 52%;
+}
 
+/* ================= LABEL ================= */
 
-    .footer {
-      display: flex;
-      justify-content: center;
-      padding-top: 24px;
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      color: #b5748f;
-      text-transform: uppercase;
-      position: relative;
-      z-index: 2;
-    }
+label {
 
-    .floaters {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
+  color: #f7e6d6;
 
-    .floater {
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      background: radial-gradient(circle at 30% 30%, #fff, #ff7db8 60%, #ff5ca8 100%);
-      transform: rotate(45deg);
-      border-radius: 6px;
-      opacity: 0.65;
-      animation: float 12s linear infinite;
-      filter: blur(0.2px);
-    }
+  font-size: 16px;
 
-    .floater::after, .floater::before {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: inherit;
-      top: -12px;
-      left: 0;
-    }
+  margin-bottom: 4px;
 
-    .floater::before {
-      top: 0;
-      left: -12px;
-    }
+  transform: translateY(var(--label-offset));
 
-    @keyframes float {
-      0% { transform: translateY(0) translateX(0) rotate(45deg); opacity: 0; }
-      10% { opacity: 0.6; }
-      100% { transform: translateY(-120vh) translateX(20vw) rotate(45deg); opacity: 0; }
-    }
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+}
 
-    @media (max-width: 980px) {
-      .brand img {
-        height: 44px;
-      }
-      :root {
-        --label-offset: 70px;
-        --input-offset: var(--label-offset);
-      }
-    }
+/* ================= INPUT ================= */
 
-    @media (max-width: 720px) {
-      html, body {
-        height: calc(var(--vh) * 100);
-        min-height: calc(var(--vh) * 100);
-        overflow: hidden;
-      }
-      body {
-        background-image: url("background-image.png");
-        background-position: center top;
-        background-repeat: no-repeat;
-        background-size: 100% auto;
-        background-attachment: scroll;
-        background-color: #ae2728;
-      }
-      :root {
-        --field-y: 50%;
-        --field-left-y: 54%;
-        --field-right-y: 54%;
-        --field-left-x: 20%;
-        --field-right-x: 20%;
-        --field-w: clamp(110px, 34vw, 150px);
-        --label-offset: 70px;
-        --input-offset: var(--label-offset);
-        --percent-y: 32%;
-        --percent-x: 47%;
-        --calc-y: 66%;
-        --calc-w: 320px;
-        --calc-h: 140px;
-      }
-      .love-percent {
-        font-size: clamp(38px, 11vw, 84px);
-      }
-      .scene {
-        padding: 16px 14px 22px;
-      }
-      .field {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        left: auto;
-        width: var(--field-w);
-        transform: none;
-      }
-      .field-left {
-        left: var(--field-left-x);
-        right: auto;
-        transform: none;
-        top: var(--field-left-y);
-      }
-      .field-right {
-        right: var(--field-right-x);
-        left: auto;
-        transform: none;
-        top: var(--field-right-y);
-      }
-      .field input {
-        width: 100%;
-      }
-      label {
-        font-size: 12px;
-        letter-spacing: 0.04em;
-        white-space: nowrap;
-        text-align: center;
-        text-transform: none;
-      }
-      input {
-        text-align: center;
-        font-size: 12px;
-      }
-      .love-percent {
-        font-size: clamp(33px, 10vw, 83px);
-        top: calc(30% - 14px);
-        left: 46%;
-      }
-      .calc-hotspot {
-        top: 67%;
-        left: 50%;
-        width: min(240px, 80vw);
-        height: 50px;
-        transform: translate(-50%, -50%);
-        z-index: 20;
-      }
-    }
+input {
 
-    @media (prefers-reduced-motion: reduce) {
-      .ribbons, .ribbons::before, .ribbons::after,
-      .floater,
-      .love-percent.is-animating { animation: none; }
-    }
-  </style>
+  width: 100%;
+  height: 34px;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1.5px solid rgba(247,230,214,.6);
+
+  outline: none;
+
+  text-align: center;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  color: #f7e6d6;
+
+  line-height: 34px;
+
+  caret-color: white;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  text-transform: uppercase;
+}
+
+input:focus {
+  border-bottom-color: #fff;
+}
+
+/* ================= RESULT ================= */
+
+.result {
+
+  position: absolute;
+
+  left: var(--percent-x);
+  top: var(--percent-y);
+
+  transform: translate(-50%, -5%);
+
+  font-family: "Montserrat", sans-serif;
+
+  font-size: clamp(38px, 5vw, 80px);
+
+  font-weight: 700;
+
+  background: linear-gradient(135deg,#b60f1a,#ff3b3b,#ff7a7a);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  letter-spacing: .04em;
+
+  z-index: 15;
+}
+
+/* ================= DESKTOP HOTSPOT ================= */
+
+.desktop-hotspot {
+
+  position: absolute;
+
+  left: 50%;
+  top: 80%; /* ADJUSTED DOWN */
+
+  transform: translate(-50%, -50%);
+
+  width: 220px; /* WIDER */
+  height: 50px;
+
+  cursor: pointer;
+
+  background: transparent;
+
+  z-index: 40;
+}
+
+/* ================= MOBILE BUTTON ================= */
+
+.mobile-btn {
+
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  top: 68%;
+
+  transform: translate(-50%, -50%);
+
+  padding: 10px 28px;
+
+  background: var(--cream);
+
+  border: none;
+
+  border-radius: 6px;
+
+  font-family: "ChasaMarelo", serif;
+
+  font-size: 22px;
+
+  letter-spacing: .1em;
+
+  color: var(--red);
+
+  cursor: pointer;
+
+  z-index: 60;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 720px) {
+
+  body {
+
+    background-image: url("final-bg.png");
+  }
+
+  :root {
+
+    --field-width: 140px;
+
+    --label-offset: -4px; /* DOWN */
+
+    --percent-y: 38%; /* DOWN */
+  }
+
+  .field-left {
+    left: 18%;
+    top: 54%;
+  }
+
+  .field-right {
+    right: 18%;
+    top: 54%;
+  }
+
+  label {
+    font-size: 12px;
+    top : 50px;
+  }
+
+  input {
+    font-size: 14px;
+
+    width: 90%; /* SHORTER LINE */
+  }
+
+  .result {
+    font-size: 42px;
+  }
+
+  .desktop-hotspot {
+    display: none;
+  }
+
+  .mobile-btn {
+    display: block;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
-  <div class="scene">
-    <div class="ribbons"></div>
-    <div class="floaters" aria-hidden="true">
-      <div class="floater" style="left: 8%; animation-delay: 0s;"></div>
-      <div class="floater" style="left: 20%; animation-delay: 2s;"></div>
-      <div class="floater" style="left: 40%; animation-delay: 4s;"></div>
-      <div class="floater" style="left: 58%; animation-delay: 1s;"></div>
-      <div class="floater" style="left: 72%; animation-delay: 3s;"></div>
-      <div class="floater" style="left: 88%; animation-delay: 5s;"></div>
-    </div>
 
-    <header></header>
+<div class="app">
 
-    <main class="content">
-      <div class="overlay">
-        <div class="field field-left">
-          <label for="nameLeft">Your Name</label>
-          <input id="nameLeft" name="nameLeft" autocomplete="off"/>
-        </div>
-        <div class="field field-right">
-          <label for="nameRight">Your Lover’s Name</label>
-          <input id="nameRight" name="nameRight" autocomplete="off"/>
-        </div>
-
-        <div id="lovePercent" class="love-percent" aria-live="polite"></div>
-
-        <button id="calcHotspot" class="calc-hotspot" type="button" aria-label="Calculate"></button>
-      </div>
-    </main>
-
-    <div class="footer"></div>
+  <!-- LEFT -->
+  <div class="field field-left">
+    <label>Your Name</label>
+    <input id="leftName" autocomplete="off"/>
   </div>
 
-  <script>
-    const calcBtn = document.getElementById("calcHotspot");
-    const lovePercent = document.getElementById("lovePercent");
-    const nameLeft = document.getElementById("nameLeft");
-    const nameRight = document.getElementById("nameRight");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const setLockedVh = () => {
-      document.documentElement.style.setProperty("--vh", `${window.innerHeight * 0.01}px`);
-    };
-    // Lock layout to initial viewport height; ignore small resize jumps from mobile browser chrome
-    setLockedVh();
-    let lastWidth = window.innerWidth;
-    let lastHeight = window.innerHeight;
-    window.addEventListener("resize", () => {
-      const widthDiff = Math.abs(window.innerWidth - lastWidth);
-      const heightDiff = Math.abs(window.innerHeight - lastHeight);
-      if (widthDiff > 80 || heightDiff > 160) {
-        lastWidth = window.innerWidth;
-        lastHeight = window.innerHeight;
-        setLockedVh();
-      }
-    });
+  <!-- RIGHT -->
+  <div class="field field-right">
+    <label>Your Lover’s Name</label>
+    <input id="rightName" autocomplete="off"/>
+  </div>
 
-    // Make labels/fields tap-to-edit; hide label while editing or when filled
-    document.querySelectorAll(".field").forEach((fieldEl) => {
-      const inputEl = fieldEl.querySelector("input");
-      const labelEl = fieldEl.querySelector("label");
-      if (!inputEl) return;
+  <!-- RESULT -->
+  <div id="result" class="result">0%</div>
 
-      const syncState = () => {
-        const hasValue = inputEl.value.trim() !== "";
-        fieldEl.classList.toggle("has-value", hasValue);
-      };
+  <!-- DESKTOP CLICK -->
+  <div id="desktopBtn" class="desktop-hotspot"></div>
 
-      const focusInput = () => {
-        inputEl.click();
-        inputEl.focus({ preventScroll: true });
-        fieldEl.classList.add("editing");
-      };
+  <!-- MOBILE BUTTON -->
+  <button id="mobileBtn" class="mobile-btn">
+    CALCULATE
+  </button>
 
-      if (labelEl) {
-        labelEl.addEventListener("click", () => {
-          focusInput();
-        });
-      }
+</div>
 
-      fieldEl.addEventListener("click", (event) => {
-        if (event.target === inputEl) return;
-        focusInput();
-      });
+<script>
 
-      inputEl.addEventListener("focus", () => {
-        fieldEl.classList.add("editing");
-      });
+/* ===== ORIGINAL LOGIC UNCHANGED ===== */
 
-      inputEl.addEventListener("blur", () => {
-        fieldEl.classList.remove("editing");
-        syncState();
-      });
+const left = document.getElementById("leftName");
+const right = document.getElementById("rightName");
 
-      inputEl.addEventListener("input", () => {
-        const start = inputEl.selectionStart;
-        const end = inputEl.selectionEnd;
-        inputEl.value = inputEl.value.toUpperCase();
-        // Restore caret position so typing feels natural
-        if (start !== null && end !== null) {
-          inputEl.setSelectionRange(start, end);
-        }
-        syncState();
-      });
+const result = document.getElementById("result");
+const mobileBtn = document.getElementById("mobileBtn");
+const desktopBtn = document.getElementById("desktopBtn");
 
-      syncState();
-    });
+function getScore(){
+  return Math.floor(Math.random() * 31) + 70;
+}
 
-    function calcScore() {
-      return Math.floor(Math.random() * 31) + 70;
+function animate(from,to){
+
+  const duration = 1800;
+  const start = performance.now();
+
+  function frame(time){
+
+    const p = Math.min((time-start)/duration,1);
+
+    const v = Math.round(from+(to-from)*p);
+
+    result.textContent = v + "%";
+
+    if(p<1){
+      requestAnimationFrame(frame);
     }
+  }
 
-    function renderPercent(value) {
-      return `<span class="love-number">${value}</span><span class="love-sign">%</span>`;
-    }
+  requestAnimationFrame(frame);
+}
 
-    function animatePercent(from, to, durationMs = 2400) {
-      const start = performance.now();
-      const range = Math.max(1, Math.abs(to - from));
-      const clampedDuration = Math.min(3400, Math.max(1800, durationMs + range * 10));
+function calculate(){
 
-      const tick = (now) => {
-        const elapsed = now - start;
-        const t = Math.min(1, elapsed / clampedDuration);
-        const eased = 1 - Math.pow(1 - t, 2.6);
-        const current = Math.round(from + (to - from) * eased);
-        lovePercent.innerHTML = renderPercent(current);
-        if (t < 1) {
-          requestAnimationFrame(tick);
-        }
-      };
-      requestAnimationFrame(tick);
-    }
+  const a = left.value.trim();
+  const b = right.value.trim();
 
-    calcBtn.addEventListener("click", () => {
-      const left = nameLeft.value.trim();
-      const right = nameRight.value.trim();
-      if (!left || !right) return;
-      const nextScore = calcScore();
-      const currentValue = parseInt(lovePercent.textContent || "0", 10) || 0;
+  if(!a || !b){
+    alert("Please enter both names");
+    return;
+  }
 
-      lovePercent.classList.remove("is-animating");
-      void lovePercent.offsetWidth;
-      lovePercent.classList.add("is-animating");
+  const next = getScore();
 
-      if (prefersReducedMotion.matches) {
-        lovePercent.innerHTML = renderPercent(nextScore);
-        return;
-      }
-      animatePercent(currentValue, nextScore);
-    });
-  </script>
+  const cur = parseInt(result.textContent) || 0;
+
+  animate(cur,next);
+}
+
+/* MOBILE */
+mobileBtn.addEventListener("click", calculate);
+
+/* DESKTOP */
+desktopBtn.addEventListener("click", calculate);
+
+</script>
+
 </body>
 </html>
